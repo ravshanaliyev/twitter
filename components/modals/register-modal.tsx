@@ -22,7 +22,7 @@ const RegisteredModal = () => {
   const body = step === 1 ? <RegisterStep1 setData={setData} setStep={setStep} /> : <RegisterStep2 />
   const footer = <div className='text-neutral-400 text-center mt-1' >
     <p>Already have an account?{" "}
-    <span className='text-sky-500 cursor-pointer' onClick={onToggle}>Sign in</span></p>
+      <span className='text-sky-500 cursor-pointer hover:underline' onClick={onToggle}>Sign in</span></p>
   </div>
   return (
     <Modal   body={body} footer={footer} isOpen={registerModal.isOpen} onClose={registerModal.onClose} step={step} totalSteps={2}/>
