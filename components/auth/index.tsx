@@ -1,17 +1,28 @@
+"use client";
 import Image from 'next/image'
-import React from 'react'
+import React, { useCallback } from 'react'
 import Button from '../ui/button'
 import { FcGoogle } from "react-icons/fc"
 import { AiFillGithub } from "react-icons/ai"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
+import useRegisterModal from '@/hooks/useRegisterModal'
+import RegisteredModal from '../modals/register-modal'
+
 
 const Auth = () => {
+  const registerModal  = useRegisterModal()
+
+  const onOpenRegisterModal = useCallback(() => {
+    registerModal.onOpen()
+  }, [registerModal])
   return (
     <>
+      <RegisteredModal />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center h-screen">
         <Image className='justify-self-center hidden md:block' src="/images/x.svg" width={400} height={400} alt="Auth" />
         <div className="flex flex-col justify-center md:justify-between space-y-10 h-full  md:h-[70vh]">
           <div className='block md:hidden'>
-            <Image src="/images/x.svg" width={60} height={60} alt="Auth" />
+            <Image src="/images/x.svg" width={50} height={50} alt="Auth" />
           </div>
           <h1 className='text-6xl font-bold'>Happening now</h1>
           <div className="w-full md:w-[60%]">
@@ -35,7 +46,7 @@ const Auth = () => {
                   <p className='mx-4'>or</p>
                 <div className="h-px bg-gray-700 w-1/2"></div>
               </div>
-              <Button label={"Create Account"} fullWidth />
+              <Button label={"Create Account"} fullWidth onClick={onOpenRegisterModal}/>
               <div className='text-[12px] text-gray-400'>
                 By signing up, you agree to the{" "}
                 <span className='text-sky-500 cursor-pointer'>Terms of Service</span> and 
@@ -48,6 +59,18 @@ const Auth = () => {
           <div className="w-full md:w-[60%]">
             <h3 className='font-medium text-xl mb-4'>Already have an account?</h3>
             <Button label={"Sign in"} fullWidth outlined/>
+            <Dialog>
+              <DialogTrigger>Open</DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+                  <DialogDescription>
+                    This action cannot be undone. This will permanently delete your account
+                    and remove your data from our servers.
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </div>
