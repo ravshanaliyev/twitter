@@ -59,18 +59,6 @@ const Auth = () => {
           <div className="w-full md:w-[60%]">
             <h3 className='font-medium text-xl mb-4'>Already have an account?</h3>
             <Button label={"Sign in"} fullWidth outlined/>
-            <Dialog>
-              <DialogTrigger>Open</DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Are you sure absolutely sure?</DialogTitle>
-                  <DialogDescription>
-                    This action cannot be undone. This will permanently delete your account
-                    and remove your data from our servers.
-                  </DialogDescription>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
           </div>
         </div>
       </div>
