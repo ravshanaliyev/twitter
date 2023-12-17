@@ -1,22 +1,28 @@
 "use client";
 import useRegisterModal from '@/hooks/useRegisterModal'
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { Dispatch, SetStateAction, useCallback, useState } from 'react'
 import Modal from '../ui/modal'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { registerStep1Schema, registerStep2Schema } from '@/lib/validation';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
 import Button from '../ui/button';
 import { Input } from '../ui/input';
+import useLoginModal from '@/hooks/useLoginModal';
 const RegisteredModal = () => {
   const [step, setStep] = useState(1)
   const [data, setData] = useState({name: "", email: ""})
+  const loginModal = useLoginModal()
   const registerModal = useRegisterModal()
+  const onToggle = useCallback(() => {
+    registerModal.onClose()
+    loginModal.onOpen()
+  }, [loginModal, registerModal])
   const body = step === 1 ? <RegisterStep1 setData={setData} setStep={setStep} /> : <RegisterStep2 />
-  const footer = <div className='text-neutral-400 text-center mt-1'>
+  const footer = <div className='text-neutral-400 text-center mt-1' >
     <p>Already have an account?{" "}
-    <span className='text-sky-500 cursor-pointer'>Sign in</span></p>
+    <span className='text-sky-500 cursor-pointer' onClick={onToggle}>Sign in</span></p>
   </div>
   return (
     <Modal   body={body} footer={footer} isOpen={registerModal.isOpen} onClose={registerModal.onClose} step={step} totalSteps={2}/>
