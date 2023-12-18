@@ -11,6 +11,8 @@ import Button from '../ui/button';
 import { Input } from '../ui/input';
 import useLoginModal from '@/hooks/useLoginModal';
 import axios from 'axios';
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
+import { AlertCircle } from 'lucide-react';
 const RegisteredModal = () => {
   const [step, setStep] = useState(1)
   const [data, setData] = useState({name: "", email: ""})
@@ -30,6 +32,7 @@ const RegisteredModal = () => {
   )
 }
 function RegisterStep1({setData, setStep} : {setData: Dispatch<SetStateAction<{name: string, email: string}>>, setStep: Dispatch<SetStateAction<number>>}) {
+  const [error, setError] = useState('')
   const form = useForm<z.infer<typeof registerStep1Schema>>({
     resolver: zodResolver(registerStep1Schema),
     defaultValues: {
@@ -44,15 +47,30 @@ function RegisterStep1({setData, setStep} : {setData: Dispatch<SetStateAction<{n
         setData(values)
         setStep(2)
       }
-    } catch (error) {
-      console.log(error);
-      
+    } catch (error: any) {
+      if(error.response.data.error){
+        setError(error.response.data.error)
+      }else{
+        setError("Something went wrong. Please try again later")
+      }
     }
   }
   const {isSubmitting} = form.formState
   return (
     <Form {...form}>
+      
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 px-10">
+        {
+          error && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>
+                {error}
+              </AlertDescription>
+            </Alert>
+          )
+        }
         <FormField
           control={form.control}
           name="name"
@@ -83,6 +101,8 @@ function RegisterStep1({setData, setStep} : {setData: Dispatch<SetStateAction<{n
   )
 } 
 function RegisterStep2({data} : {data: {name: string, email: string}}) {
+  const [error, setError] = useState('')
+
   const registerModal = useRegisterModal()
 
   const form = useForm<z.infer<typeof registerStep2Schema>>({
@@ -98,8 +118,12 @@ function RegisterStep2({data} : {data: {name: string, email: string}}) {
       if(response.success){
         registerModal.onClose()
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      if (error.response.data.error) {
+        setError(error.response.data.error)
+      } else {
+        setError("Something went wrong. Please try again later")
+      }
       
     }
     
@@ -108,6 +132,17 @@ function RegisterStep2({data} : {data: {name: string, email: string}}) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 px-10">
+        {
+          error && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>
+                {error}
+              </AlertDescription>
+            </Alert>
+          )
+        }
         <FormField
           control={form.control}
           name="username"
