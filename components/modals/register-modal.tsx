@@ -10,6 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
 import Button from '../ui/button';
 import { Input } from '../ui/input';
 import useLoginModal from '@/hooks/useLoginModal';
+import axios from 'axios';
 const RegisteredModal = () => {
   const [step, setStep] = useState(1)
   const [data, setData] = useState({name: "", email: ""})
@@ -19,7 +20,7 @@ const RegisteredModal = () => {
     registerModal.onClose()
     loginModal.onOpen()
   }, [loginModal, registerModal])
-  const body = step === 1 ? <RegisterStep1 setData={setData} setStep={setStep} /> : <RegisterStep2 />
+  const body = step === 1 ? <RegisterStep1 setData={setData} setStep={setStep} /> : <RegisterStep2 data={data} />
   const footer = <div className='text-neutral-400 text-center mt-1' >
     <p>Already have an account?{" "}
       <span className='text-sky-500 cursor-pointer hover:underline' onClick={onToggle}>Sign in</span></p>
@@ -36,9 +37,17 @@ function RegisterStep1({setData, setStep} : {setData: Dispatch<SetStateAction<{n
       name: "",
     },
   })
-  function onSubmit(values: z.infer<typeof registerStep1Schema>) {
-    setData(values)
-    setStep(2)
+  async function onSubmit(values: z.infer<typeof registerStep1Schema>) {
+    try {
+      const {data} = await axios.post('/api/auth/register?step=1', values)
+      if(data.success){
+        setData(values)
+        setStep(2)
+      }
+    } catch (error) {
+      console.log(error);
+      
+    }
   }
   const {isSubmitting} = form.formState
   return (
@@ -73,7 +82,9 @@ function RegisterStep1({setData, setStep} : {setData: Dispatch<SetStateAction<{n
     </Form>
   )
 } 
-function RegisterStep2() {
+function RegisterStep2({data} : {data: {name: string, email: string}}) {
+  const registerModal = useRegisterModal()
+
   const form = useForm<z.infer<typeof registerStep2Schema>>({
     resolver: zodResolver(registerStep2Schema),
     defaultValues: {
@@ -81,8 +92,16 @@ function RegisterStep2() {
       password: "",
     },
   })
-  function onSubmit(values: z.infer<typeof registerStep2Schema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof registerStep2Schema>) {
+    try {
+      const {data: response} = await axios.post('/api/auth/register?step=2', {...data, ...values})
+      if(response.success){
+        registerModal.onClose()
+      }
+    } catch (error) {
+      console.log(error);
+      
+    }
     
   }
   const {isSubmitting} = form.formState
@@ -95,7 +114,7 @@ function RegisterStep2() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Username" {...field} />
+                <Input type='text' placeholder="Username" {...field} />
               </FormControl>  
               <FormMessage />
             </FormItem>
@@ -107,7 +126,7 @@ function RegisterStep2() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Password" {...field} />
+                <Input type='password' placeholder="Password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
