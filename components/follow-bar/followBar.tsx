@@ -3,15 +3,13 @@
 import React from "react";
 import Button from "../ui/button";
 import { Loader2 } from "lucide-react";
-// import User from "./user";
-// import useUsers from "@/hooks/useUsers";
+import useUsers from "@/hooks/useUsers";
 import { IUser } from "@/types";
 import Link from "next/link";
 import User from "./user";
 
 const FollowBar = () => {
-    // const { isLoading, users } = useUsers(5);
-    const isLoading = true;
+    const { isLoading, users } = useUsers(5);
     return (
         <div className="py-4 hidden lg:block w-[266px]">
             <div className="bg-neutral-800 rounded-xl ">
@@ -31,13 +29,12 @@ const FollowBar = () => {
                         <Loader2 className="animate-spin text-sky-500" />
                     </div>
                 ) : (
-                    // <h1>Hello</h1>
                     <div className="flex flex-col mt-4">
-                        {/* {users.map((user: IUser) => (
+                        {users.map((user: IUser) => (
                             <Link key={user._id} href={`/profile/${user._id}`}>
                                 <User user={user} />
                             </Link>
-                        ))} */}
+                        ))}
                     </div>
                 )}
             </div>
