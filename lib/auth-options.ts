@@ -3,9 +3,22 @@ import GitHubProvider from "next-auth/providers/github";
 import { connectToDatabase } from './mongoose';
 import User from '@/database/user.model';
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: AuthOptions = {
     providers: [
+        CredentialsProvider({
+            name: "Credentials",
+            credentials: {
+                email: { label: "Email", type: "text" },
+                password: { label: "Password", type: "password" }
+            },
+            async authorize(credentials) {
+                await connectToDatabase()
+                const user = await User.findOne({ email: credentials?.email })
+                return user
+            }
+        }),
         GitHubProvider({
             clientId: process.env.GITHUB_CLIENT_ID!,
             clientSecret: process.env.GITHUB_CLIENT_SECRET!

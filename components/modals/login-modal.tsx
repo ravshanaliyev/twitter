@@ -12,6 +12,7 @@ import useRegisterModal from '@/hooks/useRegisterModal'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
 import { AlertCircle } from 'lucide-react'
 import axios from 'axios'
+import { signIn } from 'next-auth/react'
 
 const LoginModal = () => {
     const [error, setError] = useState('')
@@ -32,6 +33,7 @@ const LoginModal = () => {
         try {
             const { data } = await axios.post('/api/auth/login', values)
             if(data.success){
+                signIn("credentials", values)
                 loginModal.onClose()
             }
         } catch (error: any) {
