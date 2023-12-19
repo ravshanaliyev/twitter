@@ -8,7 +8,8 @@ interface ButtonProps {
     disabled?: boolean,
     outlined?: boolean,
     type?: 'button' | 'submit',
-    onClick?: () => void
+    onClick?: () => void,
+    classNames?: string
 }
 
 
@@ -20,9 +21,10 @@ export default function Button({
     disabled,
     outlined,
     type,
-    onClick
+    onClick,
+    classNames
 }: ButtonProps) {
   return (
-    <button disabled={disabled} type={type} onClick={onClick} className={cn("rounded-full font-semibold border transition hover:opacity-80 disabled:opacity-70 disabled:cursor-not-allowed", fullWidth ? "w-full" : "w-fit", secondary ? "bg-white text-black" : "bg-sky-500 text-white", large ? "text-xl px-5 py-3" : "text-md px-4 py-3", outlined ? "bg-transparent border-sky-600 text-sky-500 hover:bg-slate-800/40" : "")}>{label}</button>
+    <button disabled={disabled} type={type} onClick={onClick} className={cn("rounded-full font-semibold border transition hover:opacity-80 disabled:opacity-70 disabled:cursor-not-allowed", fullWidth ? "w-full" : "w-fit", secondary ? "bg-white text-black" : "bg-sky-500 text-white", large ? "text-xl px-5 py-3" : "text-md px-4 py-3", outlined ? "bg-transparent border-sky-600 text-sky-500 hover:bg-slate-800/40" : "", classNames)}>{label}</button>
   )
 }
