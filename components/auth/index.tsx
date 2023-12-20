@@ -48,7 +48,7 @@ const Auth = () => {
                   <AiFillGithub />
                   Sign up with Github
                 </div>
-               }  fullWidth secondary />
+                }  fullWidth secondary />
               <div className="flex items-center justify-center">
                 <div className="h-px bg-gray-700 w-1/2">
                 </div>
