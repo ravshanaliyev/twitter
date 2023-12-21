@@ -62,9 +62,9 @@ const Forms = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
     return (
         <div className="border-b-[1px] border-neutral-800 px-5 py-2">
             <div className="flex flex-row gap-4">
-                <Avatar>
-                    <AvatarImage src={user.profileImage} />
-                    <AvatarFallback>{user.name[0]}</AvatarFallback>
+                <Avatar className='mt-2'>
+                    <AvatarImage width={50} className='rounded-full' height={50} src={user.profileImage} />
+                    <AvatarFallback className='rounded-full bg-muted text-white py-2 px-4 text-[24px] font-extrabold uppercase '>{user.name[0]}</AvatarFallback>
                 </Avatar>
 
                 <div className="w-full">

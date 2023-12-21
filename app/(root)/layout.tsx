@@ -1,12 +1,12 @@
-import Auth from '@/components/auth'
+import Auth from '@/app/auth'
 import { authOptions } from '@/lib/auth-options'
 import { getServerSession } from 'next-auth'
 import React from 'react'
 import { Toaster } from "@/components/ui/toaster"
 import NextTopLoader from 'nextjs-toploader';
 import Sidebar from '@/components/sidebar/sidebar'
-import FollowBar from '@/components/follow-bar/followBar'
-
+import FollowBar from '@/components/shared/followBar'
+import '../../global.css'
 interface Props {
     children: React.ReactNode
 }

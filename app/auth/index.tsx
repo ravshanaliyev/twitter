@@ -1,14 +1,14 @@
 "use client";
 import Image from 'next/image'
 import React, { useCallback } from 'react'
-import Button from '../ui/button'
+import Button from '../../components/ui/button'
 import { FcGoogle } from "react-icons/fc"
 import { AiFillGithub } from "react-icons/ai"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../../components/ui/dialog'
 import useRegisterModal from '@/hooks/useRegisterModal'
-import RegisteredModal from '../modals/register-modal'
+import RegisteredModal from '../../components/modals/register-modal'
 import useLoginModal from '@/hooks/useLoginModal';
-import LoginModal from '../modals/login-modal';
+import LoginModal from '../../components/modals/login-modal';
 import {signIn, useSession} from 'next-auth/react'
 
 const Auth = () => {

@@ -1,7 +1,6 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { IUser } from "@/types";
-// import { sliceText } from "@/lib/utils";
 
 const User = ({ user }: { user: IUser }) => {
     return (
