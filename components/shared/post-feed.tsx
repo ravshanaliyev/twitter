@@ -15,6 +15,7 @@ const PostFeed = ({ userId, user }: Props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [posts, setPosts] = useState<IPost[]>([]);
 
+
     const getPosts = async () => {
         try {
             setIsLoading(true);
@@ -30,7 +31,6 @@ const PostFeed = ({ userId, user }: Props) => {
     useEffect(() => {
         getPosts();
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
     return isLoading ? (

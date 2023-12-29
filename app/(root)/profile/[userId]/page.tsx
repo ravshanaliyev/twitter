@@ -4,7 +4,6 @@ import Header from '@/components/shared/header';
 import PostFeed from '@/components/shared/post-feed';
 import { getUserById } from '@/lib/actions/user.action'
 import { authOptions } from '@/lib/auth-options';
-import { IUser } from '@/types';
 import { getServerSession } from 'next-auth';
 import React from 'react'
 
@@ -24,7 +23,6 @@ const page = async ({ params }: { params: { userId: string } }) => {
                 userId={params.userId}
                 user={JSON.parse(JSON.stringify(session.currentuser))}
             />
-
         </>
     )
 }
